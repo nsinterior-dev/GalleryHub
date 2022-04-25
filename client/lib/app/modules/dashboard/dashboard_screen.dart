@@ -10,6 +10,7 @@ class DashboardScreen extends GetWidget<DashboardController> {
 
   CarouselController buttonCarouselController = CarouselController();
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,36 +39,85 @@ class DashboardScreen extends GetWidget<DashboardController> {
       ),
       body: Container(
         color: Colors.white,
-        child: ListView(
-          children: [
-            Container(
-              color: Colors.black87,
-              child: CarouselSlider(
-                items: controller.urls.map((e){
-                  return Builder(builder: (BuildContext context) {
-                    return GestureDetector(
-                      child: Image(
-                        image: NetworkImage(e),
+        child: NestedScrollView(
+          controller: ScrollController(),
+          physics: ClampingScrollPhysics(),
+          headerSliverBuilder: (context, value){
+            return [
+              SliverAppBar(
+                pinned: true,
+                backgroundColor: Colors.black87,
+                flexibleSpace: FlexibleSpaceBar(
+                  background:CarouselSlider(
+                      items: controller.urls.map((e){
+                        return Builder(builder: (BuildContext context) {
+                          return GestureDetector(
+                            child: Image(
+                              image: NetworkImage(e),
+                            ),
+                            onTap: () {
+                              Get.to(PhotoScreen(url: e,));
+                            },
+                          );
+                        });
+                      }).toList(),
+                      options: CarouselOptions(
+                        height: 300,
+                        autoPlayAnimationDuration: Duration(milliseconds: 800),
+                        autoPlayInterval: Duration(seconds: 3),
+                        autoPlay: true,
+                        initialPage: 0,
+
                       ),
-                      onTap: () {
-                        Get.to(PhotoScreen(url: e,));
-                      },
-                    );
-                  });
-                }).toList(),
-                options: CarouselOptions(
-                  height: 300,
-                  autoPlayAnimationDuration: Duration(milliseconds: 800),
-                  autoPlayInterval: Duration(seconds: 3),
-                  autoPlay: true,
-                  initialPage: 0,
-
+                      carouselController: buttonCarouselController,
+                    ),
                 ),
-                carouselController: buttonCarouselController,
+                expandedHeight: 250,
+                floating: true,
+                bottom: TabBar(
+                  labelColor: Colors.blue,
+                  unselectedLabelColor: Colors.grey,
+                  controller: controller.tabController,
+                  tabs: [
+                    Tab(child: Text("${controller.urls.length~/2} Photos"),),
+                    Tab(child: Text("${controller.urls.length~/2} Photos"),)
+                  ],
+                ),
               ),
+            ];
+          },
+            body: TabBarView(
+              children: [
+                  ListView.builder(
+                      itemCount: controller.urls.length~/2,
+                      itemBuilder: (BuildContext context, int index){
+                        return ListTile(
+                          title: Image(
+                            image: NetworkImage(controller.urls[index]),
+                          ),
+                          onTap: () {
+                            Get.to(PhotoScreen(url: controller.urls[index],));
+                          },
+                        );
+                      }
+                  ),
+                  ListView.builder(
+                    itemCount: controller.urls.length~/2,
+                    itemBuilder: (BuildContext context, int index){
+                      return ListTile(
+                        title: Image(
+                          image: NetworkImage(controller.urls[index + 5]),
+                        ),
+                        onTap: () {
+                          Get.to(PhotoScreen(url: controller.urls[index + 5],));
+                        },
+                      );
+                    }
+                ),
+              ],
+              controller: controller.tabController,
 
-              ),
-          ],
+            ),
         ),
       ),
     );
