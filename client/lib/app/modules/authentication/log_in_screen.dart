@@ -1,4 +1,4 @@
-import 'package:client/app/modules/authentication/controllers/auth_controller.dart';
+import 'package:client/app/modules/authentication/auth_controller.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
@@ -14,12 +14,19 @@ class AuthScreen extends GetWidget<AuthController> {
               children: [
                 ListTile(
                   title: TextField(
-                    decoration: InputDecoration(labelText: 'Email Address'),
+                    controller: controller.emailController,
+                    decoration: InputDecoration(
+                        labelText: 'Email Address',
+                        hintText: controller.hintText,
+                    ),
+
                   ),
                 ),
                 ListTile(
                   title: TextField(
+                    controller: controller.passwordController,
                     decoration: InputDecoration(
+                        hintText: controller.hintText,
                         labelText: 'Password',
                         suffix: IconButton(
                           onPressed: () {controller.obscureText();},
@@ -35,8 +42,13 @@ class AuthScreen extends GetWidget<AuthController> {
                     title: Text(
                       'Log in',
                       textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      controller.login();
+                    },
                   ),
                   color: Colors.blue,
                   margin: EdgeInsets.only(top: 20),

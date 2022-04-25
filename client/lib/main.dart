@@ -1,4 +1,4 @@
-import 'package:client/app/modules/authentication/bindings/auth_binding.dart';
+import 'package:client/app/modules/authentication/auth_binding.dart';
 import 'package:client/app/routes/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
