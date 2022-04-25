@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AuthController extends GetxController{
-
   final RxBool _isObscure = true.obs;
   bool get isObscure => _isObscure.value;
   set isObscure(bool value) => _isObscure.value = value;
@@ -36,10 +35,6 @@ class AuthController extends GetxController{
      Get.toNamed(Routes.DASHBOARD);
     }
 
-
-
-    print(emailController);
-    print(passwordController);
   }
 
 

@@ -9,7 +9,7 @@ import 'routes.dart';
 class AppScreens {
   AppScreens._();
 
-  static const INITIAL = Routes.LOGIN;
+  static const INITIAL = Routes.DASHBOARD;
 
   static final routes = [
     GetPage(
